@@ -1,0 +1,23 @@
+version: '3'
+services:
+
+  dremio:
+    image: dremio/dremio-oss:latest
+    restart: always
+    ports:  
+      - 172.17.0.1:9047:9047 
+      - 172.17.0.1:31010:31010 
+      - 172.17.0.1:45678:45678
+    volumes:
+      - dremio-data:/opt/dremio/data
+    environment:
+      - DREMIO_MAX_MEMORY_SIZE_MB=8192
+      - DREMIO_MAX_DIRECT_MEMORY_SIZE_MB=8192
+
+volumes:
+  dremio-data:
+    driver: local
+    driver_opts:
+     type: none
+     device: ${PWD}/dremio
+     o: bind
